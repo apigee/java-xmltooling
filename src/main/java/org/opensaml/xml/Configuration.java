@@ -171,7 +171,6 @@ public class Configuration {
      * 
      * @param suiteId the ID of the suite
      * @param suite the configured suite
-     * @param configuration optional XML configuration information
      */
     public static void registerValidatorSuite(String suiteId, ValidatorSuite suite) {
         validatorSuites.put(suiteId, suite);
