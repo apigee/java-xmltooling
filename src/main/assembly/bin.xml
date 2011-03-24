@@ -10,10 +10,11 @@
         <dependencySet>
             <outputDirectory>/lib</outputDirectory>
             <excludes>
+                <exclude>org.opensaml:xmltooling:*</exclude>
                 <exclude>org.apache.xerces:*</exclude>
                 <exclude>xalan:*</exclude>
                 <exclude>xml-resolver:*</exclude>
-                <exclude>org.opensaml:xmltooling:*</exclude>
+                <exclude>xml-apis:</exclude>
             </excludes>
             <includes>
                 <include>*:jar:*</include>
