@@ -12,7 +12,7 @@
         XMLTooling-J is a low-level library that may be used to construct libraries that allow developers to work with
         XML in a Java beans manner.
     </description>
-    
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <slf4j.groupId>org.slf4j</slf4j.groupId>
@@ -20,25 +20,23 @@
         <xerces.groupId>org.apache.xerces</xerces.groupId>
         <xerces.version>2.10.0</xerces.version>
     </properties>
-    
+
     <repositories>
         <repository>
-            <id>shibboleth-release</id>
-            <name>Internet2 Releases</name>
-            <layout>default</layout>
-            <url>http://shibboleth.internet2.edu/downloads/maven2</url>
+            <id>shib-release</id>
+            <url>https://shibboleth.net/nexus/content/groups/public</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-    </repositories>
-    
-    <distributionManagement>
         <repository>
-            <id>release-repo</id>
-            <url>${dist.release.url}</url>
+            <id>shib-snapshot</id>
+            <url>https://shibboleth.net/nexus/content/repositories/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
         </repository>
-    </distributionManagement>
+    </repositories>
 
     <dependencies>
         <!-- Compile dependencies -->
@@ -103,9 +101,9 @@
             <artifactId>jcip-annotations</artifactId>
             <version>1.0</version>
         </dependency>
-        
+
         <!-- Provided dependencies -->
-                
+
         <!-- Runtime dependencies -->
         <dependency>
             <groupId>${xerces.groupId}</groupId>
@@ -131,7 +129,7 @@
             <version>2.7.1</version>
             <scope>runtime</scope>
         </dependency>
-        
+
         <!-- Test dependencies -->
         <dependency>
             <groupId>junit</groupId>
@@ -152,17 +150,20 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    
+
+    <distributionManagement>
+        <repository>
+            <id>release</id>
+            <url>https://shibboleth.net/nexus/content/repositories/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshot</id>
+            <url>https://shibboleth.net/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.5</version>
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -199,7 +200,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.8</version>
                 <configuration>
-                  <argLine>-Xmx256m</argLine>
+                    <argLine>-Xmx256m</argLine>
                 </configuration>
             </plugin>
             <plugin>
@@ -212,7 +213,7 @@
                         <manifestEntries>
                             <Main-Class>org.opensaml.xml.Version</Main-Class>
                         </manifestEntries>
-       					<manifestSections>
+                        <manifestSections>
                             <manifestSection>
                                 <name>org/opensaml/xml/</name>
                                 <manifestEntries>
@@ -239,7 +240,7 @@
                             </manifestSection>
                         </manifestSections>
                     </archive>
-                </configuration>				
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-source-plugin</artifactId>
@@ -252,6 +253,22 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.7</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <quiet>true</quiet>
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -282,7 +299,7 @@
                     <outputDirectory>${project.reporting.outputDirectory}/xref</outputDirectory>
                     <doctitle>${project.name} ${project.version} Code Cross-Reference</doctitle>
                     <windowtitle>${project.name} ${project.version} Java API.</windowtitle>
-                    <javadocDir>${project.reporting.outputDirectory}/apidocs</javadocDir>                    
+                    <javadocDir>${project.reporting.outputDirectory}/apidocs</javadocDir>
                 </configuration>
             </plugin>
             <plugin>
@@ -296,7 +313,7 @@
             </plugin>
         </plugins>
     </reporting>
-    
+
     <profiles>
         <profile>
             <id>release</id>
@@ -369,16 +386,16 @@
                             </execution>
                         </executions>
                     </plugin>
-                </plugins>    
-            </build>            
+                </plugins>
+            </build>
         </profile>
     </profiles>
-    
+
     <!-- Project Metadata -->
     <url>http://opensaml.org/</url>
-    
+
     <inceptionYear>2006</inceptionYear>
-    
+
     <licenses>
         <license>
             <name>Apache 2</name>
@@ -386,17 +403,17 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-    
+
     <organization>
         <name>Internet2</name>
         <url>http://www.internet2.edu/</url>
     </organization>
-    
+
     <issueManagement>
         <system>JIRA</system>
         <url>http://bugs.internet2.edu/</url>
     </issueManagement>
-    
+
     <mailingLists>
         <mailingList>
             <name>OpenSAML Users</name>
@@ -409,14 +426,14 @@
             </otherArchives>
         </mailingList>
     </mailingLists>
-    
+
     <scm>
         <connection>scm:svn:https://svn.middleware.georgetown.edu/java-xmltooling/</connection>
         <developerConnection>scm:svn:https://svn.middleware.georgetown.edu/java-xmltooling/</developerConnection>
         <tag>HEAD</tag>
         <url>http://svn.middleware.georgetown.edu/view/?root=java-xmltooling</url>
     </scm>
-    
+
     <developers>
         <developer>
             <id>cantor</id>
@@ -441,13 +458,13 @@
         <developer>
             <id>lajoie</id>
             <name>Chad La Joie</name>
-            <organization>SWITCH</organization>
-            <organizationUrl>http://www.switch.ch/</organizationUrl>
+            <organization>Itumi, LLC</organization>
+            <organizationUrl>http://itumi.biz</organizationUrl>
             <roles>
                 <role>developer</role>
                 <role>documentation</role>
             </roles>
-            <timezone>+1</timezone>
+            <timezone>-5</timezone>
         </developer>
         <developer>
             <id>putmanb</id>
@@ -470,5 +487,5 @@
             <timezone>0</timezone>
         </developer>
     </developers>
-    
+
 </project>
