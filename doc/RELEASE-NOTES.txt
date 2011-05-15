@@ -1,9 +1,16 @@
+Changes in Release 1.3.2
+==============================================
+[JXT-73] - DetachedSignatureTest failure
+[JXT-74] - Some pom changes for XMLTooling
+[JXT-77] - Update POM for Shib.net Repo and attach generated Javadocs
+[JOST-119] - change pom to create attached -sources jar
+[JOST-136] - Update Version class with getVersion() and getName() static methods
+[JOST-157] - references to spaces.internet.edu may need changed to wiki.shibboleth.net
+
 Changes in Release 1.3.1
 ==============================================
 [JXT-71] - Static helper classes should not use static Loggers
 [JXT-72] - Update dependency libs for 1.3.1
-[JXT-74] - Some pom changes for XMLTooling
-[JXT-77] - Update POM for Shib.net Repo and attach generated Javadocs
 
 Changes in Release 1.3.0
 ==============================================
