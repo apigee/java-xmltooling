@@ -17,10 +17,12 @@
 
 package org.opensaml.xml.schema;
 
+import org.opensaml.xml.validation.ValidatingXMLObject;
+
 /**
  * XSBoolean is the <code>xs:boolean</code> schema type.
  */
-public abstract interface XSBoolean {
+public abstract interface XSBoolean extends ValidatingXMLObject {
 
     /**
      * Returns the XSBooleanValue value.
