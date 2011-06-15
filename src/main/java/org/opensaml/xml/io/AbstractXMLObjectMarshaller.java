@@ -83,9 +83,9 @@ public abstract class AbstractXMLObjectMarshaller implements Marshaller {
     /** {@inheritDoc} */
     public Element marshall(XMLObject xmlObject) throws MarshallingException {
         try {
-            Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+            Document document = Configuration.getParserPool().newDocument();
             return marshall(xmlObject, document);
-        } catch (ParserConfigurationException e) {
+        } catch (XMLParserException e) {
             throw new MarshallingException("Unable to create Document to place marshalled elements in", e);
         }
     }
