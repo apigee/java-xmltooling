@@ -21,8 +21,6 @@ import java.util.List;
 import java.util.Set;
 
 import javax.xml.namespace.QName;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.opensaml.xml.Configuration;
 import org.opensaml.xml.Namespace;
@@ -119,8 +117,8 @@ public abstract class AbstractXMLObjectMarshaller implements Marshaller {
             return domElement;
         }
 
-        log.trace("{} does not contain a cached DOM representation. Creating Element to marshall into.", xmlObject
-                .getElementQName());
+        log.trace("{} does not contain a cached DOM representation. Creating Element to marshall into.",
+                xmlObject.getElementQName());
         domElement = XMLHelper.constructElement(document, xmlObject.getElementQName());
 
         log.trace("Setting created element as document root");
@@ -141,8 +139,8 @@ public abstract class AbstractXMLObjectMarshaller implements Marshaller {
     public Element marshall(XMLObject xmlObject, Element parentElement) throws MarshallingException {
         Element domElement;
 
-        log.trace("Starting to marshall {} as child of {}", xmlObject.getElementQName(), XMLHelper
-                .getNodeQName(parentElement));
+        log.trace("Starting to marshall {} as child of {}", xmlObject.getElementQName(),
+                XMLHelper.getNodeQName(parentElement));
 
         if (parentElement == null) {
             throw new MarshallingException("Given parent element is null");
@@ -164,8 +162,8 @@ public abstract class AbstractXMLObjectMarshaller implements Marshaller {
             return domElement;
         }
 
-        log.trace("{} does not contain a cached DOM representation. Creating Element to marshall into.", xmlObject
-                .getElementQName());
+        log.trace("{} does not contain a cached DOM representation. Creating Element to marshall into.",
+                xmlObject.getElementQName());
         Document owningDocument = parentElement.getOwnerDocument();
         domElement = XMLHelper.constructElement(owningDocument, xmlObject.getElementQName());
 
@@ -257,8 +255,8 @@ public abstract class AbstractXMLObjectMarshaller implements Marshaller {
             }
         }
 
-        String errorMsg = "This marshaller only operations on " + targetQName + " elements not "
-                + xmlObject.getElementQName();
+        String errorMsg =
+                "This marshaller only operations on " + targetQName + " elements not " + xmlObject.getElementQName();
         log.error(errorMsg);
         throw new MarshallingException(errorMsg);
     }
@@ -303,8 +301,9 @@ public abstract class AbstractXMLObjectMarshaller implements Marshaller {
                     marshaller = marshallerFactory.getMarshaller(Configuration.getDefaultProviderQName());
 
                     if (marshaller == null) {
-                        String errorMsg = "No marshaller available for " + childXMLObject.getElementQName()
-                                + ", child of " + xmlObject.getElementQName();
+                        String errorMsg =
+                                "No marshaller available for " + childXMLObject.getElementQName() + ", child of "
+                                        + xmlObject.getElementQName();
                         log.error(errorMsg);
                         throw new MarshallingException(errorMsg);
                     } else {
@@ -333,16 +332,16 @@ public abstract class AbstractXMLObjectMarshaller implements Marshaller {
 
         for (Namespace namespace : namespaces) {
             if (!namespace.alwaysDeclare()) {
-                if(DatatypeHelper.safeEquals(namespace.getNamespacePrefix(), XMLConstants.XML_PREFIX)
+                if (DatatypeHelper.safeEquals(namespace.getNamespacePrefix(), XMLConstants.XML_PREFIX)
                         || DatatypeHelper.safeEquals(namespace.getNamespaceURI(), XMLConstants.XML_NS)) {
-                    //the "xml" namespace never needs to be declared
+                    // the "xml" namespace never needs to be declared
                     continue;
                 }
-                
+
                 String declared = XMLHelper.lookupNamespaceURI(domElement, namespace.getNamespacePrefix());
                 if (declared != null && namespace.getNamespaceURI().equals(declared)) {
-                    log.trace("Namespace {} has already been declared on an ancestor of {} no need to add it here", namespace,
-                            xmlObject.getElementQName());
+                    log.trace("Namespace {} has already been declared on an ancestor of {} no need to add it here",
+                            namespace, xmlObject.getElementQName());
                     continue;
                 }
             }
@@ -366,10 +365,10 @@ public abstract class AbstractXMLObjectMarshaller implements Marshaller {
             throws MarshallingException {
 
         if (!DatatypeHelper.isEmpty(xmlObject.getSchemaLocation())) {
-            log.trace("Setting xsi:schemaLocation for XMLObject {} to {}", xmlObject.getElementQName(), xmlObject
-                    .getSchemaLocation());
-            domElement.setAttributeNS(XMLConstants.XSI_NS, XMLConstants.XSI_PREFIX + ":schemaLocation", xmlObject
-                    .getSchemaLocation());
+            log.trace("Setting xsi:schemaLocation for XMLObject {} to {}", xmlObject.getElementQName(),
+                    xmlObject.getSchemaLocation());
+            domElement.setAttributeNS(XMLConstants.XSI_NS, XMLConstants.XSI_PREFIX + ":schemaLocation",
+                    xmlObject.getSchemaLocation());
         }
 
         if (!DatatypeHelper.isEmpty(xmlObject.getNoNamespaceSchemaLocation())) {
@@ -378,11 +377,11 @@ public abstract class AbstractXMLObjectMarshaller implements Marshaller {
             domElement.setAttributeNS(XMLConstants.XSI_NS, XMLConstants.XSI_PREFIX + ":noNamespaceSchemaLocation",
                     xmlObject.getNoNamespaceSchemaLocation());
         }
-        
+
         if (xmlObject.isNilXSBoolean() != null && xmlObject.isNil()) {
             log.trace("Setting xsi:nil for XMLObject {} to true", xmlObject.getElementQName());
-            domElement.setAttributeNS(XMLConstants.XSI_NS, XMLConstants.XSI_PREFIX + ":nil",
-                    xmlObject.isNilXSBoolean().toString());
+            domElement.setAttributeNS(XMLConstants.XSI_NS, XMLConstants.XSI_PREFIX + ":nil", xmlObject.isNilXSBoolean()
+                    .toString());
         }
 
         QName type = xmlObject.getSchemaType();
@@ -452,8 +451,8 @@ public abstract class AbstractXMLObjectMarshaller implements Marshaller {
             try {
                 XMLHelper.rootNamespaces(domCachingObject.getDOM());
             } catch (XMLParserException e) {
-                String errorMsg = "Unable to root namespaces of cached DOM element, "
-                        + domCachingObject.getElementQName();
+                String errorMsg =
+                        "Unable to root namespaces of cached DOM element, " + domCachingObject.getElementQName();
                 log.error(errorMsg, e);
                 throw new MarshallingException(errorMsg, e);
             }
