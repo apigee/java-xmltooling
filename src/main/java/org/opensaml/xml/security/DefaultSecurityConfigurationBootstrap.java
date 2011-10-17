@@ -96,7 +96,7 @@ public class DefaultSecurityConfigurationBootstrap {
         
         // Asymmetric key transport algorithms
         config.registerKeyTransportEncryptionAlgorithmURI("RSA", null, "AES", EncryptionConstants.ALGO_ID_KEYTRANSPORT_RSAOAEP);
-        config.registerKeyTransportEncryptionAlgorithmURI("RSA", null, "DESede", EncryptionConstants.ALGO_ID_KEYTRANSPORT_RSA15);
+        config.registerKeyTransportEncryptionAlgorithmURI("RSA", null, "DESede", EncryptionConstants.ALGO_ID_KEYTRANSPORT_RSAOAEP);
         
         // Symmetric key wrap algorithms
         config.registerKeyTransportEncryptionAlgorithmURI("AES", 128, null, EncryptionConstants.ALGO_ID_KEYWRAP_AES128);
