@@ -310,7 +310,7 @@ class ListView<ElementType extends XMLObject> extends AbstractList<ElementType> 
 
     /** {@inheritDoc} */
     public int indexOf(Object o) {
-        return backingList.indexOf(o);
+        return indexList.indexOf(o);
     }
 
     /** {@inheritDoc} */
@@ -320,7 +320,7 @@ class ListView<ElementType extends XMLObject> extends AbstractList<ElementType> 
 
     /** {@inheritDoc} */
     public int lastIndexOf(Object o) {
-        return backingList.lastIndexOf(o);
+        return indexList.lastIndexOf(o);
     }
 
     /** {@inheritDoc} */
