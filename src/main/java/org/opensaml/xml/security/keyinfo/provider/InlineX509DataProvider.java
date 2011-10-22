@@ -282,7 +282,14 @@ public class InlineX509DataProvider extends AbstractKeyInfoProvider {
     protected X509Certificate findCertFromSubjectNames(List<X509Certificate> certs, List<X509SubjectName> names) {
         for (X509SubjectName subjectName : names) {
             if (! DatatypeHelper.isEmpty(subjectName.getValue())) {
-                X500Principal subjectX500Principal = x500DNHandler.parse(subjectName.getValue());
+                X500Principal subjectX500Principal = null;
+                try {
+                    subjectX500Principal = x500DNHandler.parse(subjectName.getValue());
+                } catch (IllegalArgumentException e) {
+                    log.warn("X500 subject name '{}' could not be parsed by configured X500DNHandler '{}'",
+                            subjectName.getValue(), x500DNHandler.getClass().getName());
+                    return null;
+                }
                 for (X509Certificate cert : certs) {
                     if (cert.getSubjectX500Principal().equals(subjectX500Principal)) {
                         return cert;
@@ -308,7 +315,14 @@ public class InlineX509DataProvider extends AbstractKeyInfoProvider {
             String issuerNameValue = issuerSerial.getX509IssuerName().getValue();
             BigInteger serialNumber  = issuerSerial.getX509SerialNumber().getValue();
             if (! DatatypeHelper.isEmpty(issuerNameValue)) {
-                X500Principal issuerX500Principal = x500DNHandler.parse(issuerNameValue);
+                X500Principal issuerX500Principal = null;
+                try {
+                    issuerX500Principal = x500DNHandler.parse(issuerNameValue);
+                } catch (IllegalArgumentException e) {
+                    log.warn("X500 issuer name '{}' could not be parsed by configured X500DNHandler '{}'",
+                            issuerNameValue, x500DNHandler.getClass().getName());
+                    return null;
+                }
                 for (X509Certificate cert : certs) {
                     if (cert.getIssuerX500Principal().equals(issuerX500Principal) &&
                             cert.getSerialNumber().equals(serialNumber)) {
