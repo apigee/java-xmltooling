@@ -84,10 +84,24 @@ public class IndexedXMLObjectChildrenList<ElementType extends XMLObject> extends
      * 
      * @param typeOrName the schema type or element name
      * 
-     * @return list of SAMLObjects that have given schema type or element name or null
+     * @return list of SAMLObjects that have given schema type or element name, which may be empty.
+     *         Will not be null.
      */
     public List<ElementType> get(QName typeOrName) {
+        checkAndCreateIndex(typeOrName);
         return objectIndex.get(typeOrName);
+    }
+
+    /**
+     * Check for the existence of an index for the specified QName and create it
+     * if it doesn't exist.
+     * 
+     * @param index the index to check
+     */
+    protected void checkAndCreateIndex(QName index) {
+        if (!objectIndex.containsKey(index)) {
+            objectIndex.put(index, new LazyList<ElementType>());
+        }
     }
 
     /**
@@ -115,12 +129,7 @@ public class IndexedXMLObjectChildrenList<ElementType extends XMLObject> extends
      * @param element the element to be indexed
      */
     protected void indexElement(QName index, ElementType element) {
-        List<ElementType> objects = objectIndex.get(index);
-        if (objects == null) {
-            objects = new LazyList<ElementType>();
-            objectIndex.put(index, objects);
-        }
-
+        List<ElementType> objects = get(index);
         objects.add(element);
     }
 
@@ -183,14 +192,8 @@ public class IndexedXMLObjectChildrenList<ElementType extends XMLObject> extends
      * @param element the element to be removed from that index
      */
     protected void removeElementFromIndex(QName index, ElementType element) {
-        List<ElementType> objects = objectIndex.get(index);
-        if (objects != null) {
-            objects.remove(element);
-        }
-
-        if (objects.size() == 0) {
-            objectIndex.remove(index);
-        }
+        List<ElementType> objects = get(index);
+        objects.remove(element);
     }
 
     /**
@@ -220,10 +223,7 @@ public class IndexedXMLObjectChildrenList<ElementType extends XMLObject> extends
      * @return a view of this list that contains only the elements stored under the given index
      */
     public List<? extends ElementType> subList(QName index) {
-        if (!objectIndex.containsKey(index)) {
-            objectIndex.put(index, new LazyList<ElementType>());
-        }
-
+        checkAndCreateIndex(index);
         return new ListView<ElementType>(this, index);
     }
 }
@@ -258,6 +258,7 @@ class ListView<ElementType extends XMLObject> extends AbstractList<ElementType> 
         indexList = backingList.get(index);
     }
 
+    /** {@inheritDoc} */
     public boolean add(ElementType o) {
         boolean result = backingList.add(o);
         indexList = backingList.get(index);
@@ -283,7 +284,10 @@ class ListView<ElementType extends XMLObject> extends AbstractList<ElementType> 
 
     /** {@inheritDoc} */
     public void clear() {
-        backingList.clear();
+        // Create a copy of the current list to avoid a potential concurrent modification error.
+        LazyList<ElementType> copy = new LazyList<ElementType>();
+        copy.addAll(indexList);
+        backingList.removeAll(copy);
         indexList = backingList.get(index);
     }
 
@@ -364,6 +368,7 @@ class ListView<ElementType extends XMLObject> extends AbstractList<ElementType> 
         return indexList.toArray();
     }
 
+    /** {@inheritDoc} */
     public <T extends Object> T[] toArray(T[] a) {
         return indexList.toArray(a);
     }

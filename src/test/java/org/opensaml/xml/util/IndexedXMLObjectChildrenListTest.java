@@ -81,7 +81,7 @@ public class IndexedXMLObjectChildrenListTest extends TestCase {
 
         assertEquals("List gotten by element QName index should have had 1 element", 1, indexedList.get(
                 child1.getElementQName()).size());
-        assertNull("List gotten by type QName index should have been null", indexedList.get(child1.getSchemaType()));
+        assertTrue("List gotten by type QName index should have been empty", indexedList.get(child1.getSchemaType()).isEmpty());
     }
 
     /**
@@ -101,7 +101,7 @@ public class IndexedXMLObjectChildrenListTest extends TestCase {
         indexedList.remove(child1);
         assertEquals("List gotten by element QName index should have had 1 element", 1, indexedList.get(
                 child1.getElementQName()).size());
-        assertNull("List gotten by type QName index should have been null", indexedList.get(child1.getSchemaType()));
+        assertTrue("List gotten by type QName index should have been empty", indexedList.get(child1.getSchemaType()).isEmpty());
     }
 
     /**
@@ -202,5 +202,33 @@ public class IndexedXMLObjectChildrenListTest extends TestCase {
         List<SimpleXMLObject> sublist = (List<SimpleXMLObject>) indexedList.subList(type1);
         assertTrue(child3 == sublist.get(sublist.lastIndexOf(child3)));
     }
+    
+    public void testSublistClear() {
+        SimpleXMLObject parentObject = sxoBuilder.buildObject();
+        IndexedXMLObjectChildrenList<XMLObject> indexedList = new IndexedXMLObjectChildrenList<XMLObject>(parentObject);
+
+        SimpleXMLObject child1 = sxoBuilder.buildObject(SimpleXMLObject.ELEMENT_NAME, type1);
+        indexedList.add(child1);
+
+        SimpleXMLObject child2 = sxoBuilder.buildObject(SimpleXMLObject.ELEMENT_NAME, type2);
+        indexedList.add(child2);
+        
+        SimpleXMLObject child3 = sxoBuilder.buildObject(SimpleXMLObject.ELEMENT_NAME, type1);
+        indexedList.add(child3);
+        
+        SimpleXMLObject child4 = sxoBuilder.buildObject(SimpleXMLObject.ELEMENT_NAME, type1);
+        indexedList.add(child4);
+        
+        assertEquals(4, indexedList.size());
+        
+        List<SimpleXMLObject> sublist = (List<SimpleXMLObject>) indexedList.subList(type1);
+        assertEquals(3, sublist.size());
+        
+        sublist.clear();
+        assertEquals(0, sublist.size());
+        assertEquals(1, indexedList.size());
+        assertTrue(indexedList.contains(child2));
+    }
+
     
 }

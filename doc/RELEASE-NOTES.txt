@@ -3,6 +3,7 @@ Changes in Release 1.3.3
 [JXT-78] - XSBoolean does not extend XMLObject
 [JXT-79] - Disable RSA v1.5 key transport in favor of RSA-OAEP for all data encryption key types
 [JXT-80] - Update 3rd party runtime library dependencies
+[JXT-82] - ListView's clear empties the whole backingList instead of only the entries it's responsible for
 [JXT-83] - IndexedXMLObjectChildrenList ListView indexOf and lastIndexOf methods operate on the wrong data
 
 Changes in Release 1.3.2
