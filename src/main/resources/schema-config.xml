@@ -56,7 +56,7 @@
         <ObjectProvider qualifiedName="xs:boolean">
             <BuilderClass className="org.opensaml.xml.schema.impl.XSBooleanBuilder"/>
             <MarshallingClass className="org.opensaml.xml.schema.impl.XSBooleanMarshaller"/>
-            <UnmarshallingClass className="org.opensaml.xml.schema.impl.XS ooleanUnmarshaller"/>
+            <UnmarshallingClass className="org.opensaml.xml.schema.impl.XSBooleanUnmarshaller"/>
         </ObjectProvider>
         
     </ObjectProviders>
