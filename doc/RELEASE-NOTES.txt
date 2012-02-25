@@ -1,6 +1,7 @@
 Changes in Release 1.3.4
 =============================================
 [JXT-84] - XSBoolean missing local name, QName and object providers
+[JXT-85] - Update 3rd party library
 
 Changes in Release 1.3.3
 ==============================================
