@@ -22,21 +22,19 @@ import org.opensaml.xml.io.UnmarshallingException;
 import org.opensaml.xml.parse.XMLParserException;
 import org.w3c.dom.Document;
 
-/**
- * Tests the {@link org.opensaml.xml.ElementProxy} class.
- */
+/** Test unmarshalling content for which no specific object providers were registered. */
 public class ElementProxyTest extends XMLObjectBaseTestCase {
 
     /**
      * Tests unmarshalling unknown content into the element proxy.
      */
-    public void testUnmarshallUnknownContent() throws XMLParserException, UnmarshallingException{
+    public void testUnmarshallUnknownContent() throws XMLParserException, UnmarshallingException {
         String documentLocation = "/data/org/opensaml/xml/UnknownContent.xml";
         Document document = parserPool.parse(UnmarshallingTest.class.getResourceAsStream(documentLocation));
 
         Unmarshaller unmarshaller = unmarshallerFactory.getUnmarshaller(Configuration.getDefaultProviderQName());
         XMLObject xmlobject = unmarshaller.unmarshall(document.getDocumentElement());
-        
+
         assertEquals("Unexpted root element name", "products", xmlobject.getElementQName().getLocalPart());
         assertEquals("Unexpected number of children", 2, xmlobject.getOrderedChildren().size());
     }
