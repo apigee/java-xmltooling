@@ -270,14 +270,9 @@ public class X509Util {
         SubjectKeyIdentifier ski = null;
         try {
             ski = new SubjectKeyIdentifierStructure(derValue);
+            return ski.getKeyIdentifier();
         } catch (IOException e) {
             log.error("Unable to extract subject key identifier from certificate: ASN.1 parsing failed: " + e);
-            return null;
-        }
-
-        if (ski != null) {
-            return ski.getKeyIdentifier();
-        } else {
             return null;
         }
     }
