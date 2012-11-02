@@ -12,14 +12,11 @@
 
     <groupId>org.opensaml</groupId>
     <artifactId>xmltooling</artifactId>
-    <version>1.3.4</version>
+    <version>1.4.0</version>
     <packaging>jar</packaging>
 
     <name>XMLTooling-J</name>
-    <description>
-        XMLTooling-J is a low-level library that may be used to construct libraries that allow developers to work with
-        XML in a Java beans manner.
-    </description>
+    <description>XMLTooling-J is a low-level library that may be used to construct libraries that allow developers to work with XML in a Java beans manner.</description>
 
     <properties>
         <svn.relative.location>java-xmltooling</svn.relative.location>
@@ -52,12 +49,10 @@
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
-            <version>1.3</version>
-        </dependency>
+            </dependency>
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
-            <version>1.6.2</version>
         </dependency>
         <dependency>
             <groupId>ca.juliusdavies</groupId>
