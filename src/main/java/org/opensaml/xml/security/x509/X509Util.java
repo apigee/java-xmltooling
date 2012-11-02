@@ -118,8 +118,13 @@ public class X509Util {
         }
 
         for (X509Certificate certificate : certs) {
-            if (SecurityHelper.matchKeyPair(certificate.getPublicKey(), privateKey)) {
-                return certificate;
+            try {
+                if (SecurityHelper.matchKeyPair(certificate.getPublicKey(), privateKey)) {
+                    return certificate;
+                }
+            } catch (SecurityException e) {
+                // An exception here is just a false match.
+                // Java 7 apparently throws in this case.
             }
         }
 
