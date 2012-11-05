@@ -1,5 +1,6 @@
 Changes in Release 1.4.0
 =============================================
+[JXT-24] - Support for CDATA content
 [JXT-88] - AbstractXMLObject unnecessarily creates a new QName in getElementQName
 [JXT-89] - AbstractXMLObjectUnmarshaller should check isTraceEnabled in unmarshall(Element) before *creating* QNames and logging
 [JXT-93] - X509Util.determineEntityCertificate doesn't catch lower layer SecurityException

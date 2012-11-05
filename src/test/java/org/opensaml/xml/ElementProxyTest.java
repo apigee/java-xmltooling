@@ -20,6 +20,7 @@ package org.opensaml.xml;
 import org.opensaml.xml.io.Unmarshaller;
 import org.opensaml.xml.io.UnmarshallingException;
 import org.opensaml.xml.parse.XMLParserException;
+import org.opensaml.xml.schema.XSAny;
 import org.w3c.dom.Document;
 
 /** Test unmarshalling content for which no specific object providers were registered. */
@@ -37,5 +38,7 @@ public class ElementProxyTest extends XMLObjectBaseTestCase {
 
         assertEquals("Unexpted root element name", "products", xmlobject.getElementQName().getLocalPart());
         assertEquals("Unexpected number of children", 2, xmlobject.getOrderedChildren().size());
+        assertEquals("Unexpected CDATA content", "<strong>XSLT Perfect IDE</strong>",
+                ((XSAny) xmlobject.getOrderedChildren().get(1).getOrderedChildren().get(0)).getTextContent());
     }
 }
