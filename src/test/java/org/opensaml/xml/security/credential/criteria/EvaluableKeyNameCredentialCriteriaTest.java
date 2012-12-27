@@ -48,7 +48,7 @@ public class EvaluableKeyNameCredentialCriteriaTest extends TestCase {
         criteria = new KeyNameCriteria(keyName);
     }
     
-    public void testSatifsy() {
+    public void testSatisfy() {
         EvaluableKeyNameCredentialCriteria evalCrit = new EvaluableKeyNameCredentialCriteria(criteria);
         assertTrue("Credential should have matched the evaluable criteria", evalCrit.evaluate(credential));
     }

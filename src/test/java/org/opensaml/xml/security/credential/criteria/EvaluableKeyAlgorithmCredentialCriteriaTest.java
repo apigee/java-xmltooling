@@ -47,7 +47,7 @@ public class EvaluableKeyAlgorithmCredentialCriteriaTest extends TestCase {
         criteria = new KeyAlgorithmCriteria(keyAlgo);
     }
     
-    public void testSatifsy() {
+    public void testSatisfy() {
         EvaluableKeyAlgorithmCredentialCriteria evalCrit = new EvaluableKeyAlgorithmCredentialCriteria(criteria);
         assertTrue("Credential should have matched the evaluable criteria", evalCrit.evaluate(credential));
     }

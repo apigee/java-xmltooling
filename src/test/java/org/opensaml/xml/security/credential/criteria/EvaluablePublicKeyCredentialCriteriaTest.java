@@ -53,7 +53,7 @@ public class EvaluablePublicKeyCredentialCriteriaTest extends TestCase {
         criteria = new PublicKeyCriteria(pubKey);
     }
     
-    public void testSatifsy() {
+    public void testSatisfy() {
         EvaluablePublicKeyCredentialCriteria evalCrit = new EvaluablePublicKeyCredentialCriteria(criteria);
         assertTrue("Credential should have matched the evaluable criteria", evalCrit.evaluate(credential));
     }

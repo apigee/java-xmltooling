@@ -85,17 +85,17 @@ public class EvaluableX509CertSelectorCredentialCriteriaTest extends TestCase {
         evalCrit = new EvaluableX509CertSelectorCredentialCriteria(certSelector);
     }
     
-    public void testSatifsyByCert() {
+    public void testSatisfyByCert() {
         certSelector.setCertificate(entityCert);
         assertTrue("Credential should have matched the evaluable criteria", evalCrit.evaluate(credential));
     }
     
-    public void testSatifsyByKey() {
+    public void testSatisfyByKey() {
         certSelector.setSubjectPublicKey(entityCert.getPublicKey());
         assertTrue("Credential should have matched the evaluable criteria", evalCrit.evaluate(credential));
     }
     
-    public void testSatifsyBySubjectName() {
+    public void testSatisfyBySubjectName() {
         certSelector.setSubject(subjectName);
         assertTrue("Credential should have matched the evaluable criteria", evalCrit.evaluate(credential));
     }

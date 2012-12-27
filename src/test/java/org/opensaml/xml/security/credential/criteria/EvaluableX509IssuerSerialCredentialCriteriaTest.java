@@ -83,7 +83,7 @@ public class EvaluableX509IssuerSerialCredentialCriteriaTest extends TestCase {
         criteria = new X509IssuerSerialCriteria(issuerName, serialNumber);
     }
     
-    public void testSatifsy() {
+    public void testSatisfy() {
         EvaluableX509IssuerSerialCredentialCriteria evalCrit = new EvaluableX509IssuerSerialCredentialCriteria(criteria);
         assertTrue("Credential should have matched the evaluable criteria", evalCrit.evaluate(credential));
     }

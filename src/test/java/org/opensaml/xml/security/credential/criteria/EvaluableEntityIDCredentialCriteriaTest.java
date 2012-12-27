@@ -46,7 +46,7 @@ public class EvaluableEntityIDCredentialCriteriaTest extends TestCase {
         criteria = new EntityIDCriteria(entityID);
     }
     
-    public void testSatifsy() {
+    public void testSatisfy() {
         EvaluableEntityIDCredentialCriteria evalCrit = new EvaluableEntityIDCredentialCriteria(criteria);
         assertTrue("Credential should have matched the evaluable criteria", evalCrit.evaluate(credential));
     }

@@ -47,7 +47,7 @@ public class EvaluableUsageCredentialCriteriaTest extends TestCase {
         criteria = new UsageCriteria(usage);
     }
     
-    public void testSatifsyExactMatch() {
+    public void testSatisfyExactMatch() {
         EvaluableUsageCredentialCriteria evalCrit = new EvaluableUsageCredentialCriteria(criteria);
         assertTrue("Credential should have matched the evaluable criteria", evalCrit.evaluate(credential));
     }

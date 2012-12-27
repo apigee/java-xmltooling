@@ -80,7 +80,7 @@ public class EvaluableX509SubjectNameCredentialCriteriaTest extends TestCase {
         criteria = new X509SubjectNameCriteria(subjectName);
     }
     
-    public void testSatifsy() {
+    public void testSatisfy() {
         EvaluableX509SubjectNameCredentialCriteria evalCrit = new EvaluableX509SubjectNameCredentialCriteria(criteria);
         assertTrue("Credential should have matched the evaluable criteria", evalCrit.evaluate(credential));
     }

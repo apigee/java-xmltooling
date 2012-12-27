@@ -97,7 +97,7 @@ public class EvaluableX509SubjectKeyIdentifierCredentialCriteriaTest extends Tes
         criteria = new X509SubjectKeyIdentifierCriteria(subjectKeyIdentifier);
     }
     
-    public void testSatifsy() {
+    public void testSatisfy() {
         EvaluableX509SubjectKeyIdentifierCredentialCriteria evalCrit = new EvaluableX509SubjectKeyIdentifierCredentialCriteria(criteria);
         assertTrue("Credential should have matched the evaluable criteria", evalCrit.evaluate(credential));
     }

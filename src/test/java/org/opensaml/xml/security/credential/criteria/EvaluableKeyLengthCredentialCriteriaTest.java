@@ -49,7 +49,7 @@ public class EvaluableKeyLengthCredentialCriteriaTest extends TestCase {
         criteria = new KeyLengthCriteria(keyLength);
     }
     
-    public void testSatifsy() {
+    public void testSatisfy() {
         EvaluableKeyLengthCredentialCriteria evalCrit = new EvaluableKeyLengthCredentialCriteria(criteria);
         assertTrue("Credential should have matched the evaluable criteria", evalCrit.evaluate(credential));
     }
