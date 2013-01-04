@@ -101,8 +101,6 @@
     </complexContent>
   </complexType>
 
-  <element name="OCSPResponse" type="base64Binary"/>
-
   <element name="DEREncodedKeyValue" type="dsig11:DEREncodedKeyValueType"/>
   <complexType name="DEREncodedKeyValueType">
     <simpleContent>
