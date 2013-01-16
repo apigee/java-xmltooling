@@ -107,7 +107,7 @@ public class XMLConstants {
         new QName(XSI_NS, "nil", XSI_PREFIX);
 
     /** Constructor. */
-    private XMLConstants() {
+    protected XMLConstants() {
         
     }
 }
