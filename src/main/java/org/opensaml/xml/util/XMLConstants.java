@@ -22,7 +22,7 @@ import javax.xml.namespace.QName;
 /**
  * XML related constants.
  */
-public final class XMLConstants {
+public class XMLConstants {
 
     // ****************************
     // XML Tooling
