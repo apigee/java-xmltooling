@@ -45,6 +45,7 @@ import org.opensaml.xml.security.x509.X509Credential;
 import org.opensaml.xml.security.x509.X509Util;
 import org.opensaml.xml.signature.KeyValue;
 import org.opensaml.xml.signature.X509Data;
+import org.opensaml.xml.signature.X509Digest;
 import org.opensaml.xml.signature.X509IssuerSerial;
 import org.opensaml.xml.signature.X509SKI;
 import org.opensaml.xml.signature.X509SubjectName;
@@ -349,6 +350,35 @@ public class InlineX509DataProvider extends AbstractKeyInfoProvider {
                     byte[] certValue = X509Util.getSubjectKeyIdentifier(cert);
                     if (certValue != null && Arrays.equals(xmlValue, certValue)) {
                         return cert;
+                    }
+                }
+            }
+        }
+        return null;
+    } 
+
+    /**
+     * Find the certificate from the chain that matches one of the specified digests.
+     * 
+     * @param certs list of certificates to evaluate
+     * @param digests X509 digests to use as search criteria
+     * @return the matching certificate, or null
+     */
+    protected X509Certificate findCertFromDigest(List<X509Certificate> certs, List<X509Digest> digests) {
+        byte[] certValue;
+        byte[] xmlValue;
+        
+        for (X509Digest digest : digests) {
+            if (!DatatypeHelper.isEmpty(digest.getValue())) {
+                xmlValue = Base64.decode(digest.getValue());
+                for (X509Certificate cert : certs) {
+                    try {
+                        certValue = X509Util.getX509Digest(cert, digest.getAlgorithm());
+                        if (certValue != null && Arrays.equals(xmlValue, certValue)) {
+                            return cert;
+                        }
+                    } catch (SecurityException e) {
+                        // Ignore as no match.
                     }
                 }
             }

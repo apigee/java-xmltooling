@@ -70,6 +70,7 @@ import org.opensaml.xml.security.keyinfo.KeyInfoGenerator;
 import org.opensaml.xml.security.keyinfo.KeyInfoGeneratorFactory;
 import org.opensaml.xml.security.keyinfo.KeyInfoProvider;
 import org.opensaml.xml.security.keyinfo.NamedKeyInfoGeneratorManager;
+import org.opensaml.xml.security.keyinfo.provider.DEREncodedKeyValueProvider;
 import org.opensaml.xml.security.keyinfo.provider.DSAKeyValueProvider;
 import org.opensaml.xml.security.keyinfo.provider.InlineX509DataProvider;
 import org.opensaml.xml.security.keyinfo.provider.RSAKeyValueProvider;
@@ -726,7 +727,7 @@ public final class SecurityHelper {
     
     /**
      * Get a basic KeyInfo credential resolver which can process standard inline
-     * data - RSAKeyValue, DSAKeyValue, X509Data.
+     * data - RSAKeyValue, DSAKeyValue, DEREncodedKeyValue, X509Data.
      * 
      * @return a new KeyInfoCredentialResolver instance
      */
@@ -734,6 +735,7 @@ public final class SecurityHelper {
         List<KeyInfoProvider> providers = new ArrayList<KeyInfoProvider>();
         providers.add( new RSAKeyValueProvider() );
         providers.add( new DSAKeyValueProvider() );
+        providers.add( new DEREncodedKeyValueProvider() );
         providers.add( new InlineX509DataProvider() );
         return new BasicProviderKeyInfoCredentialResolver(providers);
     }
