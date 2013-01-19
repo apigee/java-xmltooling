@@ -247,6 +247,12 @@ public class InlineX509DataProvider extends AbstractKeyInfoProvider {
             return cert;
         }
         
+        cert = findCertFromDigest(certs, x509Data.getXMLObjects(X509Digest.DEFAULT_ELEMENT_NAME));
+        if (cert != null) {
+            log.debug("End-entity certificate resolved by matching X509Digest");
+            return cert;
+        }
+        
         // TODO use some heuristic algorithm to try and figure it out based on the cert list alone.
         //      This would be in X509Utils or somewhere else external to this class.
         
@@ -364,11 +370,15 @@ public class InlineX509DataProvider extends AbstractKeyInfoProvider {
      * @param digests X509 digests to use as search criteria
      * @return the matching certificate, or null
      */
-    protected X509Certificate findCertFromDigest(List<X509Certificate> certs, List<X509Digest> digests) {
+    protected X509Certificate findCertFromDigest(List<X509Certificate> certs, List<XMLObject> digests) {
         byte[] certValue;
         byte[] xmlValue;
         
-        for (X509Digest digest : digests) {
+        for (XMLObject xo : digests) {
+            if (!(xo instanceof X509Digest)) {
+                continue;
+            }
+            X509Digest digest = (X509Digest) xo;
             if (!DatatypeHelper.isEmpty(digest.getValue())) {
                 xmlValue = Base64.decode(digest.getValue());
                 for (X509Certificate cert : certs) {
