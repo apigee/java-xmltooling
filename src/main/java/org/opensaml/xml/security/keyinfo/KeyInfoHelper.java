@@ -747,7 +747,7 @@ public class KeyInfoHelper {
      * 
      * @return a native Java security {@link java.security.Key} object
      * 
-     * @throws KeyException thrown if the given key data can not be converted into {@link PublicKey}
+     * @throws KeyException thrown if the given key data cannot be converted into {@link PublicKey}
      */
     public static PublicKey getKey(DEREncodedKeyValue keyValue) throws KeyException{
         String[] supportedKeyTypes = { "RSA", "DSA", "EC"};
@@ -755,7 +755,7 @@ public class KeyInfoHelper {
         if (keyValue.getValue() == null) {
             throw new KeyException("No data found in key value element");
         }
-        byte[] encodedKey = keyValue.getValue().getBytes();
+        byte[] encodedKey = Base64.decode(keyValue.getValue());
 
         // Iterate over the supported key types until one produces a public key.
         for (String keyType : supportedKeyTypes) {
@@ -767,9 +767,9 @@ public class KeyInfoHelper {
                     return publicKey;
                 }
             } catch (NoSuchAlgorithmException e) {
-                // Do nothing, try the next type
+                // ignore
             } catch (InvalidKeySpecException e) {
-                // Do nothing, try the next type
+                // ignore
             }
         }
         throw new KeyException("DEREncodedKeyValue did not contain a supported key type");
