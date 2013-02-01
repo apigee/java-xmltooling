@@ -23,6 +23,7 @@ import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
 
 import org.bouncycastle.util.Arrays;
+import org.opensaml.xml.security.Criteria;
 import org.opensaml.xml.security.credential.Credential;
 import org.opensaml.xml.security.x509.X509Credential;
 import org.opensaml.xml.security.x509.X509DigestCriteria;
@@ -32,7 +33,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * An implementation of {@link Criterion} which specifies criteria based on
+ * An implementation of {@link Criteria} which specifies criteria based on
  * the digest of an X.509 certificate.
  */
 public final class EvaluableX509DigestCredentialCriteria implements EvaluableCredentialCriteria {
