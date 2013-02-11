@@ -265,7 +265,7 @@ public class X509KeyInfoGeneratorFactory extends BasicKeyInfoGeneratorFactory {
      * 
      * Defaults to SHA-256.
      * 
-     * @param format the new digest algorithmURI
+     * @param alg the new digest algorithmURI
      */
     public void setX509DigestAlgorithmURI(String alg) {
         options.x509DigestAlgorithmURI = alg;
