@@ -199,7 +199,7 @@ public abstract class AbstractXMLObjectUnmarshaller implements Unmarshaller {
         if (xmlObjectBuilder == null) {
             xmlObjectBuilder = xmlObjectBuilderFactory.getBuilder(Configuration.getDefaultProviderQName());
             if (xmlObjectBuilder == null) {
-                String errorMsg = "Unable to located builder for " + XMLHelper.getNodeQName(domElement);
+                String errorMsg = "Unable to locate builder for " + XMLHelper.getNodeQName(domElement);
                 log.error(errorMsg);
                 throw new UnmarshallingException(errorMsg);
             } else {
