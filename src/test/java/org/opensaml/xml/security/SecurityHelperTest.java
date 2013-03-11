@@ -124,7 +124,7 @@ public class SecurityHelperTest extends TestCase {
         assertEquals("RSA", SecurityHelper.getKeyAlgorithmFromURI(SignatureConstants.ALGO_ID_SIGNATURE_NOT_RECOMMENDED_RSA_MD5));
         assertEquals("RSA", SecurityHelper.getKeyAlgorithmFromURI(SignatureConstants.ALGO_ID_SIGNATURE_RSA_RIPEMD160));
         assertEquals("DSA", SecurityHelper.getKeyAlgorithmFromURI(SignatureConstants.ALGO_ID_SIGNATURE_DSA));
-        assertEquals("ECDSA", SecurityHelper.getKeyAlgorithmFromURI(SignatureConstants.ALGO_ID_SIGNATURE_ECDSA_SHA1));
+        assertEquals("EC", SecurityHelper.getKeyAlgorithmFromURI(SignatureConstants.ALGO_ID_SIGNATURE_ECDSA_SHA1));
         
         // Mac related.  No specific key algorithm is indicated, any symmetric key will do. Should always return null;
         assertNull(SecurityHelper.getKeyAlgorithmFromURI(SignatureConstants.ALGO_ID_MAC_HMAC_SHA1));

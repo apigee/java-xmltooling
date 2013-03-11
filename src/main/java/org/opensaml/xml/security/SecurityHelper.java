@@ -150,7 +150,7 @@ public final class SecurityHelper {
             return "DSA";
         }
         if (ecdsaAlgorithmURIs.contains(algorithmURI)) {
-            return "ECDSA";
+            return "EC";
         }
 
         return null;
