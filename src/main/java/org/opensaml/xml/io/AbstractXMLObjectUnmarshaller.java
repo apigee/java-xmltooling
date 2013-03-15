@@ -34,7 +34,6 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
 /**
@@ -119,18 +118,19 @@ public abstract class AbstractXMLObjectUnmarshaller implements Unmarshaller {
             log.trace("Unmarshalling other child nodes of DOM Element {}", XMLHelper.getNodeQName(domElement));
         }
         
-        NodeList childNodes = domElement.getChildNodes();
-        Node childNode;
-        for (int i = 0; i < childNodes.getLength(); i++) {
-            childNode = childNodes.item(i);
+        Node childNode = domElement.getFirstChild();
+        while (childNode != null) {
 
             if (childNode.getNodeType() == Node.ATTRIBUTE_NODE) {
                 unmarshallAttribute(xmlObject, (Attr) childNode);
             } else if (childNode.getNodeType() == Node.ELEMENT_NODE) {
                 unmarshallChildElement(xmlObject, (Element) childNode);
-            } else if (childNode.getNodeType() == Node.TEXT_NODE || childNode.getNodeType() == Node.CDATA_SECTION_NODE) {
+            } else if (childNode.getNodeType() == Node.TEXT_NODE
+                    || childNode.getNodeType() == Node.CDATA_SECTION_NODE) {
                 unmarshallTextContent(xmlObject, (Text) childNode);
             }
+            
+            childNode = childNode.getNextSibling();
         }
 
         xmlObject.setDOM(domElement);
