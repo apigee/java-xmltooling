@@ -9,6 +9,7 @@ Changes in Release 1.4.0
 [JXT-97] - DigestMethod builder defaults to wrong namespace/prefix
 [JXT-98] - Add support for configuring PKIX policy checking in the PKIX trust engine
 [JXT-99] - Signature verification exception on Java 7
+[JXT-100] - missing SignatureConstants values for SHA-256 and SHA-512 digests 
 [JXT-101] - Wrong key algorithm used for elliptic curve keys
 
 Changes in Release 1.3.4
