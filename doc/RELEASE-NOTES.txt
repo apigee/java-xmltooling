@@ -4,6 +4,7 @@ Changes in Release 1.4.0
 [JXT-87] - Code in AbstractSignableXMLObject etc unnecessarily calls NodeList which is thread-unsafe
 [JXT-88] - AbstractXMLObject unnecessarily creates a new QName in getElementQName
 [JXT-89] - AbstractXMLObjectUnmarshaller should check log level before *creating* QNames and logging
+[JXT-90] - NullPointerException in createClassInstance in org.opensaml.xml.XMLConfigurator 
 [JXT-93] - X509Util.determineEntityCertificate doesn't catch lower layer SecurityException
 [JXT-96] - Decrypter doesn't fall back to default unmarshaller
 [JXT-97] - DigestMethod builder defaults to wrong namespace/prefix
