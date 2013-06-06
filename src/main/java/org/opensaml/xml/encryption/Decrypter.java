@@ -586,6 +586,11 @@ public class Decrypter {
         } catch (XMLEncryptionException e) {
             log.error("Error decrypting the encrypted data element", e);
             throw new DecryptionException("Error decrypting the encrypted data element", e);
+        } catch (Exception e) {
+            // Catch anything else, esp. unchecked RuntimeException, and convert to our checked type.
+            // BouncyCastle in particular is known to throw unchecked exceptions for what we would 
+            // consider "routine" failures.
+            throw new DecryptionException("Probable runtime exception on decryption:" + e.getMessage(), e);
         }
         if (bytes == null) {
             throw new DecryptionException("EncryptedData could not be decrypted");
@@ -693,6 +698,11 @@ public class Decrypter {
         } catch (XMLEncryptionException e) {
             log.error("Error decrypting encrypted key", e);
             throw new DecryptionException("Error decrypting encrypted key", e);
+        }  catch (Exception e) {
+            // Catch anything else, esp. unchecked RuntimeException, and convert to our checked type.
+            // BouncyCastle in particular is known to throw unchecked exceptions for what we would 
+            // consider "routine" failures.
+            throw new DecryptionException("Probable runtime exception on decryption:" + e.getMessage(), e);
         }
         if (key == null) {
             throw new DecryptionException("Key could not be decrypted");
