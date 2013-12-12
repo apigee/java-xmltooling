@@ -23,9 +23,11 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.lang.ref.SoftReference;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -120,8 +122,8 @@ public class StaticBasicParserPool implements ParserPool {
         builderPool = new Stack<SoftReference<DocumentBuilder>>();
         builderAttributes = new LazyMap<String, Object>();
         coalescing = true;
-        expandEntityReferences = true;
-        builderFeatures = new LazyMap<String, Boolean>();
+        expandEntityReferences = false;
+        builderFeatures = buildDefaultFeatures();
         ignoreComments = true;
         ignoreElementContentWhitespace = true;
         namespaceAware = true;
@@ -567,6 +569,28 @@ public class StaticBasicParserPool implements ParserPool {
             log.error("Unable to create new document builder", e);
             throw new XMLParserException("Unable to create new document builder", e);
         }
+    }
+    
+    /**
+     * Build the default set of parser features to use.
+     * 
+     * <p>These will be overriden by a call to {@link #setBuilderFeatures(Map)}.</p>
+     * 
+     * <p>
+     * The default features set are:
+     * <ul>
+     * <li>{@link XMLConstants#FEATURE_SECURE_PROCESSING} = true</li>
+     * <li>http://apache.org/xml/features/disallow-doctype-decl = true</li>
+     * </ul>
+     * </p>
+     * 
+     * @return the default features map
+     */
+    protected Map<String, Boolean> buildDefaultFeatures() {
+        HashMap<String, Boolean> features = new HashMap<String, Boolean>();
+        features.put(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+        features.put("http://apache.org/xml/features/disallow-doctype-decl", true);
+        return features;
     }
 
     /**

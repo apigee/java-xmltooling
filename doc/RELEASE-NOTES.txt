@@ -2,6 +2,7 @@ Changes in Release 1.4.1
 =============================================
 [JXT-102] - Decrypter should be defensive about Santuario and Java crypto classes throwing unchecked exceptions 
 [JXT-103] - XMLTooling failed to pass veracode due Use of Wrong Operator in String Comparison (CWE ID 597) 
+[JXT-105] - DefaultBootstrap unexpectedly uses a parser StaticBasicParserPool with expandEntityReferences set to true
 
 Changes in Release 1.4.0
 =============================================
