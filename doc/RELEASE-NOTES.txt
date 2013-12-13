@@ -4,6 +4,7 @@ Changes in Release 1.4.1
 [JXT-103] - XMLTooling failed to pass veracode due Use of Wrong Operator in String Comparison (CWE ID 597) 
 [JXT-104] - ClasspathResolver doesn't set systemId on resolved InputSources failing subsequent resolutions
 [JXT-105] - DefaultBootstrap unexpectedly uses a parser StaticBasicParserPool with expandEntityReferences set to true
+[JXT-106] - Update Apache Santuario (xmlsec) to 1.5.6
 
 Changes in Release 1.4.0
 =============================================
