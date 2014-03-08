@@ -339,8 +339,19 @@ public class Decrypter {
      * 
      * @return the static criteria set to use
      */
-    public CriteriaSet setKeyResolverCriteria() {
+    public CriteriaSet getKeyResolverCriteria() {
         return resolverCriteria;
+    }
+    
+    /**
+     * Get the optional static set of criteria used when resolving credentials based on the KeyInfo of an EncryptedData
+     * element.
+     * 
+     * @return the static criteria set to use
+     * @deprecated due to typo, use {@link #getKeyResolverCriteria()}
+     */
+    public CriteriaSet setKeyResolverCriteria() {
+        return getKeyResolverCriteria();
     }
 
     /**

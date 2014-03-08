@@ -1,3 +1,7 @@
+Changes in Release 1.4.2
+=============================================
+[JXT-108] - Encrypter setKeyResolverCriteria() typo, should be getKeyResolverCriteria()
+
 Changes in Release 1.4.1
 =============================================
 [JXT-102] - Decrypter should be defensive about Santuario and Java crypto classes throwing unchecked exceptions 
