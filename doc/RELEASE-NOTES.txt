@@ -1,6 +1,7 @@
 Changes in Release 1.4.2
 =============================================
 [JXT-108] - Encrypter setKeyResolverCriteria() typo, should be getKeyResolverCriteria()
+[JXT-109] - SimpleKeyInfoReferenceEncryptedKeyResolver constructor missing 'public' modifier 
 
 Changes in Release 1.4.1
 =============================================
