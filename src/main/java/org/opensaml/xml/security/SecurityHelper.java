@@ -401,7 +401,7 @@ public final class SecurityHelper {
         if (key instanceof DSAPrivateKey) {
             DSAPrivateKey dsaKey = (DSAPrivateKey) key;
             DSAParams keyParams = dsaKey.getParams();
-            BigInteger y = keyParams.getQ().modPow(dsaKey.getX(), keyParams.getP());
+            BigInteger y = keyParams.getG().modPow(dsaKey.getX(), keyParams.getP());
             DSAPublicKeySpec pubKeySpec = new DSAPublicKeySpec(y, keyParams.getP(), keyParams.getQ(), keyParams.getG());
 
             try {

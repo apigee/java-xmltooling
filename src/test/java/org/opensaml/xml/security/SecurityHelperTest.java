@@ -55,6 +55,12 @@ public class SecurityHelperTest extends TestCase {
     /** Location of encrypted, PEM formatted, DSA private key. */
     private String dsaPrivKeyPEMEncrypt = "/data/dsa-privkey-changeit-pass.pem";
 
+    protected void setUp() throws Exception {
+        super.setUp();
+        org.opensaml.xml.Configuration.setGlobalSecurityConfiguration(
+                DefaultSecurityConfigurationBootstrap.buildDefaultConfig());
+    }
+
     /** Test decoding an RSA private key, in PEM format, without encryption. */
     public void testDecodeRSAPrivateKeyPEMNoEncrypt() throws Exception {
         testPrivKey(rsaPrivKeyPEMNoEncrypt, null, "RSA");
@@ -91,12 +97,14 @@ public class SecurityHelperTest extends TestCase {
         PublicKey pubKey = SecurityHelper.derivePublicKey(privKey);
         assertNotNull(pubKey);
         assertEquals("RSA", pubKey.getAlgorithm());
+        assertTrue(SecurityHelper.matchKeyPair(pubKey, privKey));
         
         pubKey = null;
         privKey = testPrivKey(dsaPrivKeyPEMNoEncrypt, null, "DSA");
         pubKey = SecurityHelper.derivePublicKey(privKey);
         assertNotNull(pubKey);
         assertEquals("DSA", pubKey.getAlgorithm());
+        assertTrue(SecurityHelper.matchKeyPair(pubKey, privKey));
     }
     
     /** Test mapping algorithm URI's to JCA key algorithm specifiers. */
@@ -141,8 +149,6 @@ public class SecurityHelperTest extends TestCase {
      * @throws NoSuchAlgorithmException 
      * @throws SecurityException */
     public void testKeyPairMatching() throws NoSuchAlgorithmException, NoSuchProviderException, SecurityException {
-        org.opensaml.xml.Configuration.setGlobalSecurityConfiguration(
-                DefaultSecurityConfigurationBootstrap.buildDefaultConfig());
         KeyPair kp1rsa = SecurityHelper.generateKeyPair("RSA", 1024, null);
         KeyPair kp2rsa = SecurityHelper.generateKeyPair("RSA", 1024, null);
         KeyPair kp1dsa = SecurityHelper.generateKeyPair("DSA", 1024, null);
