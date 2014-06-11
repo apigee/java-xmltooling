@@ -30,7 +30,6 @@ public class IndexingObjectStoreTest extends TestCase {
 
         assertTrue(store.isEmpty());
         assertEquals(0, store.size());
-        assertFalse(store.contains("foo"));
 
         String nullIndex = store.put(null);
         assertNull(nullIndex);
@@ -72,5 +71,27 @@ public class IndexingObjectStoreTest extends TestCase {
         store.clear();
         assertTrue(store.isEmpty());
         assertEquals(0, store.size());
+    }
+    
+    public void testCollision() {
+        /*
+         * These String values have the same hashCode() value, using the
+         * algorithm that is documented as part of the Java 6 API. As it
+         * is part of the API, we do not expect it to vary between
+         * implementations.
+         */
+        final String s1 = "FB";
+        final String s2 = "Ea";
+        assertEquals(s1.hashCode(), s2.hashCode());
+
+        final IndexingObjectStore<String> store = new IndexingObjectStore<String>();
+
+        final String s1index = store.put(s1);
+        final String s2index = store.put(s2);
+        assertFalse(s1index.equals(s2index));
+        assertTrue(store.contains(s1index));
+        assertTrue(store.contains(s2index));
+        assertEquals(s1, store.get(s1index));
+        assertEquals(s2, store.get(s2index));
     }
 }

@@ -3,6 +3,7 @@ Changes in Release 1.4.2
 [JXT-108] - Encrypter setKeyResolverCriteria() typo, should be getKeyResolverCriteria()
 [JXT-109] - SimpleKeyInfoReferenceEncryptedKeyResolver constructor missing 'public' modifier 
 [JXT-110] - SecurityHelper derivePublicKey incorrectly derives public key for DSAPrivateKey 
+[JXT-111] - IndexingObjectStore uses hashCode() in an unsafe manner
 
 Changes in Release 1.4.1
 =============================================
