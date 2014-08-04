@@ -38,18 +38,17 @@ import java.util.List;
 import javax.security.auth.x500.X500Principal;
 
 import org.apache.commons.ssl.TrustMaterial;
+import org.bouncycastle.asn1.ASN1Encoding;
 import org.bouncycastle.asn1.ASN1InputStream;
-import org.bouncycastle.asn1.DERObject;
-import org.bouncycastle.asn1.DERObjectIdentifier;
-import org.bouncycastle.asn1.DERSequence;
-import org.bouncycastle.asn1.DERSet;
-import org.bouncycastle.asn1.DERString;
+import org.bouncycastle.asn1.ASN1ObjectIdentifier;
+import org.bouncycastle.asn1.ASN1Primitive;
+import org.bouncycastle.asn1.ASN1Sequence;
+import org.bouncycastle.asn1.ASN1Set;
+import org.bouncycastle.asn1.ASN1String;
+import org.bouncycastle.asn1.x509.Extension;
 import org.bouncycastle.asn1.x509.SubjectKeyIdentifier;
-import org.bouncycastle.asn1.x509.X509Extensions;
-import org.bouncycastle.util.Arrays;
 import org.bouncycastle.x509.extension.SubjectKeyIdentifierStructure;
 import org.bouncycastle.x509.extension.X509ExtensionUtil;
-import org.opensaml.xml.schema.SchemaBuilder;
 import org.opensaml.xml.security.SecurityException;
 import org.opensaml.xml.security.SecurityHelper;
 import org.opensaml.xml.util.DatatypeHelper;
@@ -153,32 +152,32 @@ public class X509Util {
         List<String> commonNames = new LinkedList<String>();
         try {
             ASN1InputStream asn1Stream = new ASN1InputStream(dn.getEncoded());
-            DERObject parent = asn1Stream.readObject();
+            ASN1Primitive parent = asn1Stream.readObject();
 
             String cn = null;
-            DERObject dnComponent;
-            DERSequence grandChild;
-            DERObjectIdentifier componentId;
-            for (int i = 0; i < ((DERSequence) parent).size(); i++) {
-                dnComponent = ((DERSequence) parent).getObjectAt(i).getDERObject();
-                if (!(dnComponent instanceof DERSet)) {
+            ASN1Primitive dnComponent;
+            ASN1Sequence grandChild;
+            ASN1ObjectIdentifier componentId;
+            for (int i = 0; i < ((ASN1Sequence) parent).size(); i++) {
+                dnComponent = ((ASN1Sequence) parent).getObjectAt(i).toASN1Primitive();
+                if (!(dnComponent instanceof ASN1Set)) {
                     log.debug("No DN components.");
                     continue;
                 }
 
                 // Each DN component is a set
-                for (int j = 0; j < ((DERSet) dnComponent).size(); j++) {
-                    grandChild = (DERSequence) ((DERSet) dnComponent).getObjectAt(j).getDERObject();
+                for (int j = 0; j < ((ASN1Set) dnComponent).size(); j++) {
+                    grandChild = (ASN1Sequence) ((ASN1Set) dnComponent).getObjectAt(j).toASN1Primitive();
 
                     if (grandChild.getObjectAt(0) != null
-                            && grandChild.getObjectAt(0).getDERObject() instanceof DERObjectIdentifier) {
-                        componentId = (DERObjectIdentifier) grandChild.getObjectAt(0).getDERObject();
+                            && grandChild.getObjectAt(0).toASN1Primitive() instanceof ASN1ObjectIdentifier) {
+                        componentId = (ASN1ObjectIdentifier) grandChild.getObjectAt(0).toASN1Primitive();
 
                         if (CN_OID.equals(componentId.getId())) {
                             // OK, this dn component is actually a cn attribute
                             if (grandChild.getObjectAt(1) != null
-                                    && grandChild.getObjectAt(1).getDERObject() instanceof DERString) {
-                                cn = ((DERString) grandChild.getObjectAt(1).getDERObject()).getString();
+                                    && grandChild.getObjectAt(1).toASN1Primitive() instanceof ASN1String) {
+                                cn = ((ASN1String) grandChild.getObjectAt(1).toASN1Primitive()).getString();
                                 commonNames.add(cn);
                             }
                         }
@@ -266,7 +265,7 @@ public class X509Util {
      */
     public static byte[] getSubjectKeyIdentifier(X509Certificate certificate) {
         Logger log = getLogger();
-        byte[] derValue = certificate.getExtensionValue(X509Extensions.SubjectKeyIdentifier.getId());
+        byte[] derValue = certificate.getExtensionValue(Extension.subjectKeyIdentifier.getId());
         if (derValue == null || derValue.length == 0) {
             return null;
         }
@@ -466,7 +465,12 @@ public class X509Util {
                 || OTHER_ALT_NAME.equals(nameType)) {
 
             // these have no defined representation, just return a DER-encoded byte[]
-            return ((DERObject) nameValue).getDEREncoded();
+            try {
+                return ((ASN1Primitive) nameValue).getEncoded(ASN1Encoding.DER);
+            } catch (IOException ioe) {
+                log.error("Unable to decode name into DER: {}", ioe);
+                return null;
+            }
         }
 
         log.warn("Encountered unknown alt name type '{}', adding as-is", nameType);
