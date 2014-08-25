@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>net.shibboleth</groupId>
-        <artifactId>parent-v2</artifactId>
+        <groupId>io.apigee.opensaml</groupId>
+        <artifactId>opensaml-parent</artifactId>
         <version>1</version>
     </parent>
 
-    <groupId>org.opensaml</groupId>
+    <groupId>io.apigee.opensaml</groupId>
     <artifactId>xmltooling</artifactId>
     <version>1.4.2-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -170,5 +170,11 @@
             </build>
         </profile>
     </profiles>
+
+    <scm>
+        <connection>scm:git:https://github.com/apigee/java-xmltooling.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/apigee/java-xmltooling.git</developerConnection>
+        <url>git@github.com:apigee/java-xmltooling.git</url>
+    </scm>
 
 </project>
