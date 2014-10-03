@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>net.shibboleth</groupId>
-        <artifactId>parent-v2</artifactId>
-        <version>1</version>
+        <groupId>io.apigee.opensaml</groupId>
+        <artifactId>opensaml-parent</artifactId>
+        <version>1.1</version>
     </parent>
 
-    <groupId>org.opensaml</groupId>
+    <groupId>io.apigee.opensaml</groupId>
     <artifactId>xmltooling</artifactId>
     <version>1.4.0</version>
     <packaging>jar</packaging>
@@ -22,29 +22,12 @@
         <svn.relative.location>java-xmltooling</svn.relative.location>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>shib-release</id>
-            <url>https://build.shibboleth.net/nexus/content/groups/public</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>shib-snapshot</id>
-            <url>https://build.shibboleth.net/nexus/content/repositories/snapshots</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </repository>
-    </repositories>
-
     <dependencies>
         <!-- Compile dependencies -->
         <dependency>
             <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-jdk15</artifactId>
-            <version>1.46</version>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>1.50</version>
         </dependency>
         <dependency>
             <groupId>commons-codec</groupId>
@@ -79,19 +62,11 @@
         <!-- Runtime dependencies -->
         <dependency>
             <groupId>${xerces.groupId}</groupId>
-            <artifactId>xml-apis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>${xerces.groupId}</groupId>
             <artifactId>xercesImpl</artifactId>
         </dependency>
         <dependency>
-            <groupId>${xerces.groupId}</groupId>
+            <groupId>${xalan.groupId}</groupId>
             <artifactId>serializer</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>xml-resolver</groupId>
-            <artifactId>xml-resolver</artifactId>
         </dependency>
         <dependency>
             <groupId>${xalan.groupId}</groupId>
@@ -171,5 +146,11 @@
             </build>
         </profile>
     </profiles>
+
+    <scm>
+        <connection>scm:git:https://github.com/apigee/java-xmltooling.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/apigee/java-xmltooling.git</developerConnection>
+        <url>git@github.com:apigee/java-xmltooling.git</url>
+    </scm>
 
 </project>
